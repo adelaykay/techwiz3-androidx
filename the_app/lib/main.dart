@@ -5,8 +5,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
 import 'package:StreamMaster/screens/login.dart';
 import 'firebase_options.dart';
+<<<<<<< HEAD
 import 'onboarding.dart';
 
+=======
+import 'package:the_app/Screens/register.dart';
+>>>>>>> 30edd2b1eaf4de343c3ace282054298b40db869b
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -31,7 +35,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
