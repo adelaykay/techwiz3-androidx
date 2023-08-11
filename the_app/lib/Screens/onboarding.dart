@@ -3,7 +3,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:StreamMaster/screens/login.dart';
 import 'package:StreamMaster/onboarding_card.dart';
 
-import 'models/onboarding_card_model.dart';
+import '../models/onboarding_card_model.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);
