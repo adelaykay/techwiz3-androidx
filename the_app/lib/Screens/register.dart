@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_app/Components/input_Field.dart';
+import 'package:StreamMaster/Components/input_Field.dart';
 final formKey = GlobalKey<FormState>();//key for form
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -21,7 +21,7 @@ class Register extends StatelessWidget {
               // key: formKey,
               child:  Column(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(10.0),
                     child: InputField(placeholder: 'Full Name', icon: Icons.person_outline_rounded, type: TextInputType.name,),
                   ),
