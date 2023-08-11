@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:the_app/Components/input_field.dart';
-import 'package:the_app/Components/passwordinputfield.dart';
+import 'package:StreamMaster/Components/input_Field.dart';
+
+import '../Components/passwordinputfield.dart';
 
 
+final formKey = GlobalKey<FormState>();//key for form
 class Register extends StatefulWidget {
+
+
   const Register({super.key});
 
   @override
@@ -52,7 +56,7 @@ class _RegisterState extends State<Register> {
                    Padding(
                     padding: EdgeInsets.all(5.0),
                     child: InputField( placeholder: 'Full Name', icon: Icons.person_outline_rounded, type: TextInputType.name, hintText: 'Enter your full name'),
-                  ),
+                   ),
                   Padding(
                     padding: EdgeInsets.all(5.0),
                     child: InputField(placeholder: 'Email Address', icon: Icons.email_outlined, type: TextInputType.emailAddress, hintText: 'Enter your email Address eg.ty@gmail.com',),
