@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+import 'package:the_app/Screens/register.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Home()
+    return const MaterialApp(
+      home: Register(),
     );
   }
 }
@@ -33,13 +33,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('StreamMaster'),
+        title: const Text('StreamMaster'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text('Streaming Service'),
       ),
-    );;
+    );
   }
 }
 
