@@ -7,6 +7,7 @@ import 'package:StreamMaster/screens/login.dart';
 import 'firebase_options.dart';
 import 'screens/onboarding.dart';
 import 'package:StreamMaster/screens/register.dart';
+import 'package:StreamMaster/Screens/contactus.dart';
 
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       darkTheme: isDarkMode ? ThemeData.dark() : null,
       themeMode: XTheme.themeMode,
-      home: Register(),
+      home: ContactUs() ,
       debugShowCheckedModeBanner: false,
     );
   }
