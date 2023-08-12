@@ -18,14 +18,48 @@ class ContactUs extends StatelessWidget {
                 Card(
                   color:  Colors.deepOrangeAccent,
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(30.0),
                     child: Row(
                       children: [
-                        Icon(Icons.phone),
+                        Icon(Icons.phone_outlined),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 130.0),
+                          child: Text('+2348104837711'),
+                        )
                       ],
                     ),
                   ),
                 ),
+                Card(
+                  color:  Colors.deepOrangeAccent,
+                  child: Padding(
+                    padding: EdgeInsets.all(30.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.email_outlined),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 130.0),
+                          child: Text('andriodx@gmail.com'),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  color:  Colors.deepOrangeAccent,
+                  child: Padding(
+                    padding: EdgeInsets.all(30.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.location_city_outlined),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 100.0),
+                          child: Text('123 James str Surulere Lagos'),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
