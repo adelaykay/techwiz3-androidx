@@ -7,23 +7,26 @@ class Login03Model {
 
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
-  static const kTextValidatorEmailRegex =
+  final kTextValidatorEmailRegex =
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
+
+  final kTextValidatorNameRegex = r"^[A-Za-z-]+(?: [A-Za-z-]+)+$";
+
+  final kTextValidatorPhoneRegex = r"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$";
+
+  final kTextValidatorUsernameRegex = r"^[a-z0-9_-]{3,15}$";
+  // State field(s) for NameField widget
+  TextEditingController? nameFieldController;
+  TextEditingController? usernameFieldController;
+
+
+
   // State field(s) for EmailAddressField widget.
   TextEditingController? emailAddressFieldController;
-  String? Function(BuildContext, String?)? emailAddressFieldControllerValidator = (
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Email is required.';
-    }
+  String? Function(String?)? emailAddressFieldControllerValidator;
 
-    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
-      return 'Has to be a valid email address.';
-    }
-    return null;
-  };
-  String? _emailAddressFieldControllerValidator(
-      BuildContext context, String? val) {
+
+  String? _emailAddressFieldControllerValidator(String? val) {
     if (val == null || val.isEmpty) {
       return 'Email is required.';
     }
@@ -33,6 +36,11 @@ class Login03Model {
     }
     return null;
   }
+
+  // State field(s) for PasswordField widget.
+  TextEditingController? phoneFieldController;
+
+
 
   // State field(s) for PasswordField widget.
   TextEditingController? passwordFieldController;
@@ -58,6 +66,9 @@ class Login03Model {
   void dispose() {
     unfocusNode.dispose();
     emailAddressFieldController?.dispose();
+    usernameFieldController?.dispose();
+    nameFieldController?.dispose();
+    phoneFieldController?.dispose();
     passwordFieldController?.dispose();
   }
 
