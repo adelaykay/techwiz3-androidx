@@ -1,8 +1,10 @@
 import 'package:StreamMaster/components/drawer.dart';
+import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:StreamMaster/components/config.dart';
 import 'package:StreamMaster/services/favorites_service.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../components/media_card.dart';
 import '../components/bottom_nav.dart';
 
@@ -48,6 +50,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favorites'),
+        centerTitle: true,
       ),
       drawer: MyDrawer(),
       body: user == null
@@ -55,8 +58,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
         child: Text('User not signed in'),
       )
           : _isLoading
-          ? const Center(
-          child: CircularProgressIndicator()
+          ? Center(
+          child: SpinKitFadingCircle(color: XTheme.of(context).primary,)
       )
           : _favorites.isNotEmpty ? OrientationBuilder(builder: (context, orientation) {
         return GridView(

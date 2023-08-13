@@ -20,7 +20,6 @@ import 'firebase_options.dart';
 import 'models/screen_arguments.dart';
 import 'screens/onboarding.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,28 +34,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
     var routeName = '/onboarding';
     return MaterialApp(
       darkTheme: isDarkMode ? ThemeData.dark() : null,
       themeMode: XTheme.themeMode,
-      home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.waiting){
-              return Center(child: SpinKitWaveSpinner(color: Theme.of(context).primaryColorLight,),);
-            } else if(snapshot.hasError){
-              return Center(child: Text('Something went wrong'),);
-            } else if(snapshot.hasData){
-              return const Home();
-            } else {
-              return Onboarding();
-            }
-          }
-      ),
+      initialRoute: user != null ? Home.routeName : Onboarding.routeName,
       // initialRoute: user != null ? Home.routeName : Onboarding.routeName,
       routes: {
+        Home.routeName: (context) => Home(),
         SearchResultsPage.routeName: (context) => SearchResultsPage(),
         FavoritesPage.routeName: (context) => FavoritesPage(),
         SignupScreen.routeName: (context) => SigninScreen(),
@@ -103,9 +91,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) {
               // print('main${args['videosList']}');
-              return VideosPage(
-                  videosList: args['videosList']
-              );
+              return VideosPage(videosList: args['videosList']);
             },
           );
         }
@@ -120,9 +106,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) {
               // print('main${args['videosList']}');
-              return VideoList(
-                  videosList: args['videosList']
-              );
+              return VideoList(videosList: args['videosList']);
             },
           );
         }

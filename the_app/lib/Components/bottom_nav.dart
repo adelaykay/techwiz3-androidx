@@ -22,12 +22,15 @@ class _NavBar extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return  Container(
-        color: Colors.black,
+        color: Colors.transparent,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
             selectedIndex: widget.idx,
-            backgroundColor: Colors.black,
+            iconSize: 30,
+            tabBorderRadius: 28,
+            textStyle: XTheme.of(context).bodyText1,
+            backgroundColor: Colors.transparent,
             color: XTheme.of(context).primary,
             activeColor: XTheme.of(context).title1.color,
             tabBackgroundColor: XTheme.of(context).primary,

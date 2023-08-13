@@ -1,6 +1,7 @@
 import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../components/flutter_flow/flutter_flow_widgets.dart';
 import '../models/login_model.dart';
@@ -23,6 +24,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     // TODO: implement initState
     super.initState();
     _model = Login03Model();
+    _model.emailAddressFieldController ??= TextEditingController();
+    _model.passwordFieldController ??= TextEditingController();
+    _model.nameFieldController ??= TextEditingController();
+    _model.phoneFieldController ??= TextEditingController();
+    _model.usernameFieldController ??= TextEditingController();
   }
 
   @override
@@ -507,13 +513,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   void updateProfile() async {
-    String newDisplayName = '${_model.nameFieldController?.text.trim()}';
-    String newEmail = '${_model.emailAddressFieldController?.text.trim()}';
-    final user = FirebaseAuth.instance.currentUser;
-    // ToDo: Implement update user phone number
-    // PhoneAuthCredential phoneAuthCred = ;
-    // await user?.updatePhoneNumber(PhoneAuthCredential phoneAuthCred);
-    await user?.updateDisplayName(newDisplayName);
-    await user?.updateEmail(newEmail);
+    showDialog(
+          context: context,
+          builder: (context) => Center(
+            child: SpinKitFadingCircle(color: XTheme.of(context).primary,),
+          ));
+    try {
+      String newDisplayName = '${_model.nameFieldController?.text.trim()}';
+      String newEmail = '${_model.emailAddressFieldController?.text.trim()}';
+      final user = FirebaseAuth.instance.currentUser;
+      // ToDo: Implement update user phone number
+      // PhoneAuthCredential phoneAuthCred = ;
+      // await user?.updatePhoneNumber(PhoneAuthCredential phoneAuthCred);
+      await user?.updateDisplayName(newDisplayName);
+      await user?.updateEmail(newEmail);
+      SnackBar snack = SnackBar(content: Center(child: Icon(Icons.check),));
+      ScaffoldMessenger.of(context).showSnackBar(snack);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch(e){
+      print(e);
+      SnackBar snack = SnackBar(content: Text('${e.message}'));
+      ScaffoldMessenger.of(context).showSnackBar(snack);
+      Navigator.pop(context);
+    }
   }
 }

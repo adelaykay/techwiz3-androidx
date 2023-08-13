@@ -16,11 +16,7 @@ class VideosPage extends StatefulWidget {
   State<VideosPage> createState() => _VideosPageState();
 }
 
-// https://www.googleapis.com/youtube/v3/videos
-// ?id=I0ESNf_lFnY
-// &key=AIzaSyDzWYKsiZsZIYz0LIDGL6oieMWQAxHBx2Q
-// &part=snippet
-// &fields=items(id,snippet(title,%20description,%20thumbnails(default),channelTitle))
+
 class _VideosPageState extends State<VideosPage> {
   late YoutubePlayerController _controller;
   late TextEditingController _idController;

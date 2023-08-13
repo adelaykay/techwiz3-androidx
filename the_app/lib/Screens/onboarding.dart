@@ -17,15 +17,13 @@ class Onboarding extends StatelessWidget {
           Navigator.of(context).pushReplacementNamed(SignupScreen.routeName);
         },
         headerBackgroundColor: Colors.transparent,
-        finishButtonText: 'Register',
+        finishButtonText: 'Get Started',
         finishButtonStyle: FinishButtonStyle(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
           backgroundColor: XTheme.of(context).primary,
         ),
-        skipTextButton: Text('Skip'),
-        trailing: Text('Login'),
-        trailingFunction: (){
-          Navigator.of(context).pushReplacementNamed(SignupScreen.routeName);
-        },
+        hasSkip: true,
+        skipTextButton: Text('Skip', style: XTheme.of(context).bodySmall,),
         centerBackground: true,
         background: [
           Padding(
@@ -35,7 +33,7 @@ class Onboarding extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 20,
             ),
           ),
-          Image.asset('assets/images/launch.png'),
+          Image.asset('assets/images/logo.png'),
         ],
         totalPage: 2,
         speed: 1.8,

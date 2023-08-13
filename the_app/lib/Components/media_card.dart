@@ -1,6 +1,5 @@
 import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
 import 'package:flutter/material.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:StreamMaster/models/screen_arguments.dart';
 
@@ -28,32 +27,13 @@ class MediaCard extends StatefulWidget {
 }
 
 class _MediaCardState extends State<MediaCard> {
-  Color? glowcolor;
-  bool isLoading = true;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _extractColors();
-
   }
-  // extract colors from images
-  Future<void> _extractColors() async {
-    String url = '${widget.posterPath}${widget.movie.poster}';
-    final PaletteGenerator paletteGenerator =
-    await PaletteGenerator.fromImageProvider(
-      NetworkImage(url), // Replace with your image path
-    );
 
-    // Access the prominent colors from paletteGenerator here
-    setState(() {
-      glowcolor = paletteGenerator.dominantColor!.color;
-      setState(() {
-        isLoading = false;
-      });
-    });
-    // Now you can use glowColor to apply the glow effect
-  }
+
 
   @override
   Widget build(BuildContext context) {

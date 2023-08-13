@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
@@ -8,6 +9,7 @@ class MyHeaderDrawer extends StatefulWidget {
 }
 
 class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
+  final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,18 +21,18 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(
-           backgroundColor: Colors.black,
+            backgroundImage: Image.network('${user?.photoURL}').image,
             maxRadius: 54,
             ),
           Text(
-            "Stream Master",
+            "${user?.displayName}",
             style: TextStyle(
                 color: Colors.white,
               fontSize: 20
             ),
           ),
           Text(
-            "infro@streammaster.dev",
+            "${user?.email}",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 14

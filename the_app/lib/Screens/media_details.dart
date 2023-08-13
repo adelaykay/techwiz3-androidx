@@ -1,3 +1,4 @@
+import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
 import 'package:StreamMaster/screens/videos_list.dart';
 import 'package:StreamMaster/screens/videos_page.dart';
 import 'package:StreamMaster/size_config.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:StreamMaster/models/movie_details.dart';
@@ -227,7 +229,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
               ],
             ),
             isLoading
-                ? CircularProgressIndicator()
+                ? Center(child: SpinKitFadingCircle(color: XTheme.of(context).primary,))
                 : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -385,7 +387,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                       viewportFraction: 0.3,
                       enableInfiniteScroll: false,
                       pageSnapping: false,
-                      aspectRatio: 2,
+                      aspectRatio: 2.5,
                       padEnds: false,
                     ))
                     : CarouselSlider(
@@ -402,7 +404,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                       viewportFraction: 0.3,
                       enableInfiniteScroll: false,
                       pageSnapping: false,
-                      aspectRatio: 2,
+                      aspectRatio: 2.5,
                       padEnds: false,
                     )),
               ],

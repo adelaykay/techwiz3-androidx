@@ -8,12 +8,13 @@ import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:StreamMaster/components/config.dart';
 import '../models/media.dart';
 
 class Home extends StatefulWidget {
-  static String routeName = '/';
+  static const routeName = '/';
 
   const Home({Key? key}) : super(key: key);
 
@@ -26,6 +27,7 @@ class _HomeState extends State<Home> {
   Map<String, String> imageUrl = {};
 
   bool isLoading = true;
+  int? upcomingLength = 0;
   late List<Media> _movies;
   late List<Media> _tv;
   late List<Media> _upcoming;
@@ -39,12 +41,12 @@ class _HomeState extends State<Home> {
 
   late String posterPath = '';
   late String backdropPath = '';
+
   @override
   void initState() {
     super.initState();
     getData();
   }
-
 
   // request data from api
   Future<void> getData() async {
@@ -74,6 +76,7 @@ class _HomeState extends State<Home> {
       backdropPath = imageUrl['backdropPath']!;
       setState(() {
         isLoading = false;
+        upcomingLength = _upcoming.length;
       });
     }).catchError((e) => print(e));
   }
@@ -113,7 +116,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => _key.currentState?.openDrawer(),
-            icon: const Icon(
+            icon: Icon(
               Icons.menu,
             ),
             color: Theme.of(context).primaryColorLight,
@@ -140,8 +143,8 @@ class _HomeState extends State<Home> {
                 showDialog(
                     context: context,
                     builder: (context) => Center(
-                      child: CircularProgressIndicator(),
-                    ));
+                          child: CircularProgressIndicator(),
+                        ));
                 List<Media> searchResponse;
                 searchResponse = await MediaApi.getMedia(
                     path: '3/search/multi', query: word, mediaType: '');
@@ -167,71 +170,81 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   isLoading
-                      ? Placeholder()
+                      ? Container(
+                    height: MediaQuery.of(context).size.height,
+                        child: SpinKitFadingCircle(
+                            color: XTheme.of(context).primary,
+                          ),
+                      )
                       : Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: Text(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: Text(
                             'Now Trending',
                             style: XTheme.of(context).subtitle1,
                           ),
-                      ),
-                  CarouselSlider(items: [
-                    ...List.generate(
-                        _upcoming.length,
-                        (index) => MediaCard(
-                            movie: _upcoming[index],
-                            posterPath: posterPath,
-                            backdropPath: backdropPath,
-                            hideTitleAndRating: true,
-                        ))
-                  ], options: CarouselOptions(
-                    initialPage: 0,
-                      viewportFraction: 0.7,
-                      height: 500,
-                      enlargeCenterPage: true,
-                      enlargeStrategy:
-                      CenterPageEnlargeStrategy.zoom,
-                      enlargeFactor: 0.5,
-                      padEnds: true,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                  )),
-                  //Implement Watchlist then list here if available
-                  isLoading
-                      ? Text('')
-                      : Text(
-                    'TV Shows',
-                    style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+                        ),
+                  CarouselSlider(
+                      items: [
+                        ...List.generate(
+                            upcomingLength!,
+                            (index) => MediaCard(
+                                  movie: _upcoming[index],
+                                  posterPath: posterPath,
+                                  backdropPath: backdropPath,
+                                  hideTitleAndRating: true,
+                                ))
+                      ],
+                      options: CarouselOptions(
+                        initialPage: 0,
+                        viewportFraction: 0.7,
+                        height: 500,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                        enlargeFactor: 0.5,
+                        padEnds: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                      )),
+                  //Todo: Implement Watchlist then list here if available
                   isLoading
                       ? Text('')
                       : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CarouselSlider(
-                            items: [
-                              ...List.generate(
-                                  _tv.length,
-                                      (index) => MediaCard(
-                                      movie: _tv[index],
-                                      posterPath: posterPath,
-                                      backdropPath: backdropPath))
-                            ],
-                            options: CarouselOptions(
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                viewportFraction: 0.3,
-                                aspectRatio: 1.5,
-                                pageSnapping: false,
-                                padEnds: false)),
-                      ),
-
+                          padding: EdgeInsets.only(left: 18.0),
+                          child: Text(
+                            'TV Shows',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                  isLoading
+                      ? Text('')
+                      : Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CarouselSlider(
+                              items: [
+                                ...List.generate(
+                                    _tv.length,
+                                    (index) => MediaCard(
+                                        movie: _tv[index],
+                                        posterPath: posterPath,
+                                        backdropPath: backdropPath))
+                              ],
+                              options: CarouselOptions(
+                                  initialPage: 0,
+                                  enableInfiniteScroll: true,
+                                  viewportFraction: 0.3,
+                                  aspectRatio: 2.5,
+                                  pageSnapping: false,
+                                  padEnds: false)),
+                        ),
                 ],
               ),
             ),
           ),
         ),
-        bottomNavigationBar: NavBar(idx: 0,),
-
+        bottomNavigationBar: NavBar(
+          idx: 0,
+        ),
       ),
     );
   }
