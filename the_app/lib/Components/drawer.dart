@@ -103,9 +103,9 @@ class _MyDrawerState extends State<MyDrawer> {
               currentPage = DrawerSections.about;
               showAboutDialog(
                   context: context,
-                  applicationName: 'StreamMaster',
-                  applicationVersion: '0.7.0',
-                  applicationIcon: Image.asset('assets/images/logo.png'));
+                  applicationName: 'Stream Master',
+                  applicationVersion: '1.0.0',
+                  applicationIcon: Expanded(child: Image.asset('assets/images/logo.png')));
             } else if (id == 5) {
               currentPage = DrawerSections.feedback;
               Navigator.pushNamed(context, FeedBackForm.routeName);
@@ -123,7 +123,7 @@ class _MyDrawerState extends State<MyDrawer> {
                             Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 SigninScreen.routeName,
-                                (route) => route.isFirst);
+                                (route) => route.isActive);
                           },
                           child: Text(
                             'Logout',

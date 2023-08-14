@@ -1,4 +1,4 @@
-import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:StreamMaster/screens/videos_list.dart';
 import 'package:StreamMaster/screens/videos_page.dart';
 import 'package:StreamMaster/size_config.dart';
@@ -412,9 +412,8 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
           ],
         ),
       ),
-      floatingActionButton: user == null
-          ? Text('')
-          : FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: XTheme.of(context).primary,
         onPressed: () {
           widget.mediaType == 'movie'
               ? FavoritesService.updateUser(
@@ -435,7 +434,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
               widget.mediaType);
           ScaffoldMessenger.of(context).showSnackBar(addedToFaves);
         },
-        child: Icon(Icons.favorite),
+        child: Icon(Icons.favorite, color: XTheme.of(context).bodyText1.color,),
       ),
     );
   }

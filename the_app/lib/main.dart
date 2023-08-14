@@ -6,6 +6,7 @@ import 'package:StreamMaster/screens/home.dart';
 import 'package:StreamMaster/screens/media_details.dart';
 import 'package:StreamMaster/screens/search_results.dart';
 import 'package:StreamMaster/screens/signup.dart';
+import 'package:StreamMaster/screens/subs_list.dart';
 import 'package:StreamMaster/screens/subscription.dart';
 import 'package:StreamMaster/screens/update_profile.dart';
 import 'package:StreamMaster/screens/videos_list.dart';
@@ -13,7 +14,7 @@ import 'package:StreamMaster/screens/videos_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:StreamMaster/screens/signin.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'firebase_options.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         ContactUs.routeName: (context) => ContactUs(),
         ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
         MySubs.routeName: (context) => MySubs(),
-        UpdateProfileScreen.routeName: (context) => UpdateProfileScreen()
+        UpdateProfileScreen.routeName: (context) => UpdateProfileScreen(),
+        SubscriptionList.routeName: (context) => SubscriptionList(),
       },
       // Provide a function to handle named routes.
       // Use this function to identify the named

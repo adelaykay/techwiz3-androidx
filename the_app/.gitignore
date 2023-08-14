@@ -13,7 +13,7 @@ migrate_working_dir/
 /android/app/google-services.json
 /lib/screens/signin.dart
 /lib/screens/signup.dart
-/lib/screens/test.dart
+/lib/screens/home_page_model.dart
 /lib/secret.dart
 
 # IntelliJ related

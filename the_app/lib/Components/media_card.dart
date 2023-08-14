@@ -1,4 +1,4 @@
-import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:StreamMaster/models/screen_arguments.dart';

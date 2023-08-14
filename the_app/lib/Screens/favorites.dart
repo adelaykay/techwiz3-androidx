@@ -1,5 +1,5 @@
 import 'package:StreamMaster/components/drawer.dart';
-import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:StreamMaster/components/config.dart';

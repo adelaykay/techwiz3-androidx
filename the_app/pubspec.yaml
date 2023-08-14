@@ -54,6 +54,8 @@ dependencies:
   flutter_onboarding_slider: ^1.0.9
   flutter_spinkit: ^5.2.0
   shared_preferences: ^2.2.0
+  page_transition: ^2.0.9
+  simple_icons: ^7.10.0
 
 dev_dependencies:
   flutter_test:

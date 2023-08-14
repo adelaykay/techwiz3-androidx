@@ -1,5 +1,5 @@
 import 'package:StreamMaster/components/drawer.dart';
-import 'package:StreamMaster/components/flutter_flow/xtheme.dart';
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:StreamMaster/components/media_card.dart';
 import 'package:StreamMaster/components/bottom_nav.dart';
 import 'package:StreamMaster/models/login_model.dart';
@@ -143,7 +143,7 @@ class _HomeState extends State<Home> {
                 showDialog(
                     context: context,
                     builder: (context) => Center(
-                          child: CircularProgressIndicator(),
+                          child: SpinKitFadingCircle(color: XTheme.of(context).primary,),
                         ));
                 List<Media> searchResponse;
                 searchResponse = await MediaApi.getMedia(

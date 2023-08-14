@@ -21,7 +21,8 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(
-            backgroundImage: Image.network('${user?.photoURL}').image,
+            foregroundImage: Image.network('${user?.photoURL}').image,
+            backgroundImage: NetworkImage('https://loremflickr.com/g/150/150/profile'),
             maxRadius: 54,
             ),
           Text(
