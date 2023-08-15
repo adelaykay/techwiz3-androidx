@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:StreamMaster/components/flutter_flow/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 const kThemeModeKey = '__theme_mode__';
@@ -33,6 +33,7 @@ abstract class XTheme {
           : LightModeTheme();
 
   late Color primaryColor;
+  late Color extendedPrimary;
   late Color secondaryColor;
   late Color tertiaryColor;
   late Color alternate;
@@ -118,6 +119,7 @@ abstract class XTheme {
 
 class LightModeTheme extends XTheme {
   late Color primaryColor = const Color(0xFFD24848);
+  late Color extendedPrimary = const Color(0xFFFFECD1);
   late Color secondaryColor = const Color(0xFF0072BB);
   late Color tertiaryColor = const Color(0xFF8FC93A);
   late Color alternate = const Color(0xFFE4CC37);
@@ -132,6 +134,7 @@ class LightModeTheme extends XTheme {
 
 class DarkModeTheme extends XTheme {
   late Color primaryColor = const Color(0xFFD24848);
+  late Color extendedPrimary = const Color(0xFFA26868);
   late Color secondaryColor = const Color(0xFF0072BB);
   late Color tertiaryColor = const Color(0xFF8FC93A);
   late Color alternate = const Color(0xFFE4CC37);
