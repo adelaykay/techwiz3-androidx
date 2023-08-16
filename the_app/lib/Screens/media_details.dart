@@ -102,7 +102,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: XTheme.of(context).primaryBackground,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -125,7 +125,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.transparent, Colors.black])),
+                          colors: [Colors.transparent, XTheme.of(context).primaryBackground])),
                 ),
                 isLoading
                     ? Text('')
@@ -253,7 +253,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                         children: [
                           Icon(
                             Icons.access_time,
-                            color: Colors.white60,
+                            color: XTheme.of(context).bodyText1.color,
                             size: 15,
                           ),
                           Text(
@@ -262,21 +262,21 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                                 : (tvDetails.cznCount! > 1
                                 ? ' ${tvDetails.cznCount} seasons'
                                 : ' ${tvDetails.cznCount} season'),
-                            style: TextStyle(color: Colors.white60),
+                            style: TextStyle(color: XTheme.of(context).bodyText1.color),
                           ),
                           SizedBox(
                             width: 20,
                           ),
                           Icon(
                             Icons.star,
-                            color: Colors.white,
+                            color: XTheme.of(context).bodyText1.color,
                             size: 15,
                           ),
                           Text(
                             widget.mediaType == 'movie'
                                 ? ' ${movieDetails.rating}'
                                 : ' ${tvDetails.rating}',
-                            style: TextStyle(color: Colors.white60),
+                            style: TextStyle(color: XTheme.of(context).bodyText1.color),
                           )
                         ],
                       ),
@@ -350,7 +350,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
                         widget.mediaType == 'movie'
                             ? '${movieDetails.overview}'
                             : '${tvDetails.overview}',
-                        style: TextStyle(color: Colors.white60),
+                        style: TextStyle(color: XTheme.of(context).bodyText1.color),
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       )
@@ -434,7 +434,7 @@ class _MediaDetailsPageState extends State<MediaDetailsPage> {
               widget.mediaType);
           ScaffoldMessenger.of(context).showSnackBar(addedToFaves);
         },
-        child: Icon(Icons.favorite, color: XTheme.of(context).bodyText1.color,),
+        child: Icon(Icons.favorite, color: XTheme.of(context).lineColor,),
       ),
     );
   }

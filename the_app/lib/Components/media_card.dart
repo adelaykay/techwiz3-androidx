@@ -50,6 +50,7 @@ class _MediaCardState extends State<MediaCard> {
                       : '${widget.backdropPath}${widget.movie.backdrop}',
                   mediaType: widget.movie.mediaType)),
       child: Container(
+
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

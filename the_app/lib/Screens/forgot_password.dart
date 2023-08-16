@@ -1,4 +1,5 @@
 import 'package:StreamMaster/components/xtheme.dart';
+import 'package:StreamMaster/screens/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -240,7 +241,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           email: _model.emailAddressFieldController!.text.trim());
       SnackBar snack = SnackBar(content: Center(child: Icon(Icons.check)));
       ScaffoldMessenger.of(context).showSnackBar(snack);
-      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushNamedAndRemoveUntil(context, SigninScreen.routeName, (route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       print(e);
       SnackBar snack = SnackBar(content: Text('${e.message}'));

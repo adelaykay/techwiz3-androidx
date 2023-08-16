@@ -1,4 +1,5 @@
 import 'package:StreamMaster/components/bottom_nav.dart';
+import 'package:StreamMaster/components/drawer.dart';
 import 'package:StreamMaster/components/xtheme.dart';
 import 'package:StreamMaster/models/subscription.dart';
 import 'package:StreamMaster/screens/subs_list.dart';
@@ -19,20 +20,41 @@ class MySubs extends StatefulWidget {
 class _MySubsState extends State<MySubs> {
   static final wallet = {"balance": ""};
   List<Subscription> cardItems = Subscription.subscriptions;
+  int? expandedIndex;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  void toggleCard(int index) {
+    setState(() {
+      if (expandedIndex == index) {
+        expandedIndex = null;
+      } else {
+        expandedIndex = index;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    Color primary = XTheme.of(context).primary;
     return Scaffold(
-      backgroundColor: XTheme.of(context).secondaryBackground,
+      key: _key,
+      backgroundColor: XTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text('${user?.displayName}'),
-        leading: CircleAvatar(
-          // foregroundImage: NetworkImage('${user?.photoURL}'),
-          backgroundImage:
-              NetworkImage('https://loremflickr.com/g/150/150/profile'),
+        leading: GestureDetector(
+          onTap: ()=> _key.currentState?.openDrawer(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 18),
+            child: CircleAvatar(
+              // foregroundImage: NetworkImage('${user?.photoURL}'),
+              backgroundImage:
+                  NetworkImage('https://loremflickr.com/g/150/150/profile'),
+            ),
+          ),
         ),
+        title: Text('${user?.displayName}', style: XTheme.of(context).title1,),
         actions: [
           GestureDetector(
             onTap: () {
@@ -40,61 +62,70 @@ class _MySubsState extends State<MySubs> {
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          for (int i = 0; i < 10; i++)
-                            ListTile(
-                              leading: cardItems[i].icon,
-                              title: Text(cardItems[i].serviceName),
-                              onTap: () {
-                                // Handle subscription selection for Service 1
-                                Navigator.pop(context);
-                              },
-                            )
-                        ],
+                    return SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: XTheme.of(context).primaryBackground,),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            for (int i = 0; i < 10; i++)
+                              ListTile(
+                                leading: cardItems[i].icon,
+                                title: Text(cardItems[i].serviceName),
+                                onTap: () {
+                                  // Handle subscription selection for Service 1
+                                  Navigator.pop(context);
+                                },
+                              )
+                          ],
+                        ),
                       ),
                     );
                   });
             },
-            child: CircleAvatar(
-              child: Icon(Icons.add),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8, right: 18),
+              child: CircleAvatar(
+                backgroundColor: XTheme.of(context).primaryBackground,
+                child: Icon(
+                  Icons.add,
+                  color: primary,
+                ),
+              ),
             ),
           )
         ],
       ),
+      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: EdgeInsets.all(18.0),
           child: Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
               Container(
                 decoration: BoxDecoration(
-                    color: XTheme.of(context).primary,
+                    color: Color(0xffFF7477),
+                    boxShadow: kElevationToShadow[4],
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5),
                         topRight: Radius.circular(20))),
                 child: ListTile(
                   contentPadding: EdgeInsets.all(20),
                   leading: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Balance',
-                        style: XTheme.of(context).bodyText2,
+                        style: XTheme.of(context).bodyText1,
                         textAlign: TextAlign.start,
                       ),
                       Text(
                         '\$180.60',
-                        style: XTheme.of(context).title1,
+                        style: XTheme.of(context).headlineSmall.override(color: XTheme.of(context).primaryText, fontFamily: 'Inter'),
                       )
                     ],
                   ),
@@ -117,7 +148,7 @@ class _MySubsState extends State<MySubs> {
                     onPressed: () {},
                     child: Text('View all'),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
+                        backgroundColor: primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         )),
@@ -134,43 +165,58 @@ class _MySubsState extends State<MySubs> {
                         (index) => Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: ListTile(
-                                horizontalTitleGap: 20,
-                                minVerticalPadding: 10,
-                                tileColor: Colors.white,
-                                isThreeLine: true,
-                                shape: RoundedRectangleBorder(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.white, width: 2),
                                     borderRadius: BorderRadius.circular(20)),
-                                leading: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: cardItems[index].icon,
-                                  ),
-                                ),
-                                title: Text(
-                                  '\$${cardItems[index].subAmount}',
-                                  style: XTheme.of(context).title3.override(
-                                      color: Colors.black, fontFamily: 'Inter'),
-                                  textAlign: TextAlign.end,
-                                ),
-                                subtitle: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      '${cardItems[index].daysLeft} days left',
-                                      style: XTheme.of(context).bodyMedium,
+                                    ListTile(
+                                      horizontalTitleGap: 20,
+                                      minVerticalPadding: 10,
+                                      // isThreeLine: true,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)),
+                                      leading: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.grey,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: cardItems[index].icon,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        '\$${cardItems[index].subAmount}',
+                                        style: XTheme.of(context).title3.override(
+
+                                            fontFamily: 'Inter'),
+                                        textAlign: TextAlign.end,
+                                      ),
+                                      subtitle: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            '${cardItems[index].daysLeft} days left',
+                                            style: XTheme.of(context).bodyMedium,
+                                          ),
+
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      '${cardItems[index].serviceName}',
-                                      style: XTheme.of(context).title3.override(
-                                          color: Colors.black54,
-                                          fontFamily: 'Inter'),
-                                      textAlign: TextAlign.end,
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 18.0),
+                                      child: Text(
+                                        '${cardItems[index].serviceName}',
+                                        style: XTheme.of(context)
+                                            .title3
+                                            .override(
+                                            fontFamily: 'Inter'),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -200,264 +246,104 @@ class _MySubsState extends State<MySubs> {
                     },
                     child: Text('View all'),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
+                        backgroundColor: primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         )),
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 99,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SubscriptionList.routeName);
-                    },
-                    child: Card(
-                      color: XTheme.of(context).primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20))),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Card(
-                                borderOnForeground: false,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    side: BorderSide(color: Colors.black)),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        color: Colors.orangeAccent),
-                                    child: Icon(SimpleIcons.netflix))),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
+              for (int index = 0; index < 4; index++)
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  height: expandedIndex == index ? 200.0 : 80.0,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(5))),
+                    color: cardItems[index].cardColor,
+                    shadowColor: XTheme.of(context).bodyText2.color,
+                    elevation: 10,
+                    child: InkWell(
+                      onTap: () {
+                        toggleCard(index);
+                      },
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              title: Text(
+                                cardItems[index].serviceName,
+                                style: XTheme.of(context).bodyText1.override(
+                                    color: Colors.black,
+                                    fontFamily: 'Montserrat',
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                              subtitle: Text('${cardItems[index].planDetails}', style: XTheme.of(context).bodySmall.override(color: XTheme.of(context).primaryText, fontFamily: 'Inter'),),
+                              leading: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: cardItems[index].icon,
+                              ),
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '\$${cardItems[index].subAmount}',
+                                    style:
+                                        XTheme.of(context).bodyText1.override(
+                                            color: Colors.black,
+                                            fontFamily: 'Montserrat',
+                                            // fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                  ),
+                                  Text('${cardItems[index].subsTime}'
+                                      .split(' ')[0])
+                                ],
+                              ),
+                            ),
+                            if (expandedIndex == index)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text('Payment Info   ' +
+                                        cardItems[index].planDetails),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                        '\$ ${cardItems[index].subAmount}'),
+                                  ),
+                                ],
+                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Netflix',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(cardItems[index].planDetails),
                                 ),
-                                SizedBox(
-                                  height: 3,
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child:
+                                      Text('\$ ${cardItems[index].subAmount}'),
                                 ),
-                                Text(
-                                  'Jun 24, 14:00 pm',
-                                  style: TextStyle(color: Colors.black),
-                                )
                               ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '\$24.00',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'per month',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 99,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SubscriptionList.routeName);
-                    },
-                    child: Card(
-                      color: XTheme.of(context).primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20))),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Card(
-                                borderOnForeground: false,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    side: BorderSide(color: Colors.black)),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        color: XTheme.of(context).primary),
-                                    child:
-                                        Icon(SimpleIcons.amazon))),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Prime Video',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'Jun 24, 14:00 pm',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '\$24.00',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'per month',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 99,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(SubscriptionList.routeName);
-                    },
-                    child: Card(
-                      color: XTheme.of(context).primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20))),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Card(
-                                borderOnForeground: false,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    side: BorderSide(color: Colors.black)),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        color: XTheme.of(context).primary),
-                                    child:
-                                        Icon(SimpleIcons.hulu))),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Deezer',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'Mar 19, 06:00 am',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '\$5.00',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'per month',
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                )
             ],
           ),
         ),

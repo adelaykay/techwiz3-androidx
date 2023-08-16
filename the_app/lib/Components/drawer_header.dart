@@ -1,3 +1,4 @@
+import 'package:StreamMaster/components/xtheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.deepOrange,
+      color: XTheme.of(context).primary,
       width: double.infinity,
       height: 200,
       padding: EdgeInsets.only(top: 20.0),

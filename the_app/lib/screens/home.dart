@@ -77,6 +77,7 @@ class _HomeState extends State<Home> {
       setState(() {
         isLoading = false;
         upcomingLength = _upcoming.length;
+        print('debug check: ${user}');
       });
     }).catchError((e) => print(e));
   }
@@ -111,17 +112,18 @@ class _HomeState extends State<Home> {
       },
       child: Scaffold(
         key: _key,
-        backgroundColor: Colors.black,
+        backgroundColor: XTheme.of(context).primaryBackground,
         drawer: MyDrawer(),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => _key.currentState?.openDrawer(),
             icon: Icon(
               Icons.menu,
+              color: XTheme.of(context).primary,
             ),
             color: Theme.of(context).primaryColorLight,
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: XTheme.of(context).primaryBackground,
           title: Image.asset(
             'assets/images/logo.png',
             height: 50,
@@ -130,7 +132,8 @@ class _HomeState extends State<Home> {
           actions: [
             AnimSearchBar(
               color: Colors.transparent,
-              searchIconColor: Theme.of(context).primaryColorLight,
+              boxShadow: false,
+              searchIconColor: XTheme.of(context).primary,
               rtl: true,
               width: 300,
               textController: searchController,

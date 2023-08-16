@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:StreamMaster/components/xtheme.dart';
 import 'package:StreamMaster/screens/signin.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'firebase_options.dart';
 import 'models/screen_arguments.dart';
 import 'screens/onboarding.dart';
@@ -38,14 +37,19 @@ class MyApp extends StatelessWidget {
     final brightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
-    var routeName = '/onboarding';
     return MaterialApp(
       darkTheme: isDarkMode ? ThemeData.dark() : null,
       themeMode: XTheme.themeMode,
       initialRoute: user != null ? Home.routeName : Onboarding.routeName,
       // initialRoute: user != null ? Home.routeName : Onboarding.routeName,
       routes: {
-        Home.routeName: (context) => Home(),
+        Home.routeName: (context) {
+            if(user!=null){
+              return Home();
+            } else {
+              return SigninScreen();
+            }
+          },
         SearchResultsPage.routeName: (context) => SearchResultsPage(),
         FavoritesPage.routeName: (context) => FavoritesPage(),
         SignupScreen.routeName: (context) => SigninScreen(),

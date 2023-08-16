@@ -41,14 +41,17 @@ class _NavBar extends State<NavBar> {
               GButton(
                 icon: Icons.home,
                 text: 'Home',
+                shadow: widget.idx == 0 ? kElevationToShadow[4] :  null ,
               ),
               GButton(
                 icon: Icons.credit_card,
                 text: 'Subscription',
+                  shadow: widget.idx == 1 ? kElevationToShadow[4] :  null
               ),
               GButton(
                 icon: Icons.favorite_border,
                 text: 'Likes',
+                  shadow: widget.idx == 2 ? kElevationToShadow[4] :  null
               ),
             ],
           ),

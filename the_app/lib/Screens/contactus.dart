@@ -1,5 +1,6 @@
 import 'package:StreamMaster/components/xtheme.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_icons/simple_icons.dart';
 
 class ContactUs extends StatelessWidget {
   static const routeName = '/contact';
@@ -9,68 +10,56 @@ class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color primary = XTheme.of(context).primary;
+    List<Icon> icons = [Icon(Icons.phone), Icon(Icons.email), Icon(Icons.home)];
+    List<String> details = [
+      '+2348104837711',
+      'androidx@gmail.com',
+      '123 James Street, Surulere, Lagos'
+    ];
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text(
           'Contact Us',
           style: TextStyle(color: primary),
         ),
-        centerTitle: true,
         backgroundColor: XTheme.of(context).primaryBackground,
       ),
       body: Container(
-        child: Column(
-          children: [
-            Card(
-              color: primary,
-              child: Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.phone_outlined),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 130.0),
-                      child: Text('+2348104837711'),
-                    )
-                  ],
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10,
               ),
-            ),
-            Card(
-              color: primary,
-              child: Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.email_outlined),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 130.0),
-                      child: Text('andriodx@gmail.com'),
-                    )
-                  ],
+              ...List.generate(
+                details.length,
+                (index) => Card(
+                  color: primary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: EdgeInsets.all(30.0),
+                    child: Row(
+                      children: [
+                        icons[index],
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          details[index],
+                          style: XTheme.of(context).bodyText1,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Card(
-              color: primary,
-              child: Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.location_city_outlined),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 100.0),
-                      child: Text('123 James str Surulere Lagos'),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

@@ -7,15 +7,15 @@ class FavoritesService {
   static Future<List<Media>> getData() async {
     List<Media> faves = [];
     await FirebaseFirestore.instance
-        .collection('users')
+        .collection('sm_users')
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email!)
         .get()
         .then((QuerySnapshot querySnapshot) => {
       querySnapshot.docs.forEach((doc) {
         doc['favorites']!.forEach((media) {
           faves.add(Media(
-              id: media['id'] as int,
-              rating: media['rating'] as double,
+              id: media['id'],
+              rating: media['rating'],
               title: media['title'] as String,
               poster: media['poster'] == null
                   ? ''
@@ -27,14 +27,14 @@ class FavoritesService {
       })
     }).catchError((e)=>debugPrint('failed to retrieve data: $e'));
 
-    print('done');
+    print('favorites retrieved');
     return faves;
   }
 
   static Future<void> updateUser(String? title, double? rating, int? id,
       String? year, String? poster, String? backdrop, String mediaType) {
     // Create a CollectionReference called users that references the firestore collection
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    CollectionReference users = FirebaseFirestore.instance.collection('sm_users');
     // Call the user's CollectionReference to update the document
     return users
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)

@@ -10,11 +10,11 @@ class Login03Model {
   final kTextValidatorEmailRegex =
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
 
-  final kTextValidatorNameRegex = r"^[A-Za-z-]+(?: [A-Za-z-]+)+$";
+  final kTextValidatorNameRegex = r"^[A-Za-z-]+(?: [A-Za-z-]+)+\s$";
 
   final kTextValidatorPhoneRegex = r"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$";
 
-  final kTextValidatorUsernameRegex = r"^[a-z0-9_-]{3,15}$";
+  final kTextValidatorUsernameRegex = r"^[A-Za-z0-9_-]{3,15}$";
   // State field(s) for NameField widget
   TextEditingController? nameFieldController;
   TextEditingController? usernameFieldController;

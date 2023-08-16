@@ -40,6 +40,7 @@ abstract class XTheme {
   late Color secondaryBackground;
   late Color primaryBtnText;
   late Color lineColor;
+  late Color textHighlight;
   Color primary = Color(0xFFD24848);
   Color primaryText = Color(0xFFFFFFF3);
   Color secondaryText = Color(0xFFFFECD1);
@@ -118,15 +119,16 @@ abstract class XTheme {
 
 
 class LightModeTheme extends XTheme {
-  late Color primaryColor = const Color(0xFFD24848);
+  late Color primaryColor = const Color(0xffFF7477);
   late Color extendedPrimary = const Color(0xFFFFECD1);
-  late Color secondaryColor = const Color(0xFF0072BB);
-  late Color tertiaryColor = const Color(0xFF8FC93A);
-  late Color alternate = const Color(0xFFE4CC37);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color secondaryColor = const Color(0xFF98B6DB);
+  late Color tertiaryColor = const Color(0xFFF5D24B);
+  late Color alternate = const Color(0xFF89C9B6);
+  late Color primaryBackground = const Color(0xFFF4CFC7);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
+  late Color textHighlight = const Color(0xFFFFFFFF);
 
   late Color primaryBtnText = Color(0xFFFFFFFF);
   late Color lineColor = Color(0xFFE0E3E7);
@@ -135,14 +137,14 @@ class LightModeTheme extends XTheme {
 class DarkModeTheme extends XTheme {
   late Color primaryColor = const Color(0xFFD24848);
   late Color extendedPrimary = const Color(0xFFA26868);
-  late Color secondaryColor = const Color(0xFF0072BB);
-  late Color tertiaryColor = const Color(0xFF8FC93A);
-  late Color alternate = const Color(0xFFE4CC37);
-  late Color primaryBackground = const Color(0xFF221A1A);
+  late Color secondaryColor = const Color(0xFF98B6DB);
+  late Color tertiaryColor = const Color(0xFFF5D24B);
+  late Color alternate = const Color(0xFF89C9B6);
+  late Color primaryBackground = const Color(0xFF020000);
   late Color secondaryBackground = const Color(0xFF101213);
   late Color primaryText = const Color(0xFFFFFFF3);
   late Color secondaryText = const Color(0xFF95A1AC);
-
+  late Color textHighlight = const Color(0xFF57636C);
   late Color primaryBtnText = Color(0xFFFFFFFF);
   late Color secondaryBtnText = Color(0xFFFFFFFF);
   late Color lineColor = Color(0xFF22282F);
